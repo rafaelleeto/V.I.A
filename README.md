@@ -1,84 +1,113 @@
-# VIA
+# V.I.A — Sistema de Verificação Inteligente de Acesso
 
-## Instalação
+Sistema de controle de acesso com RFID desenvolvido como TCC no SENAI Celso Charuri.
 
-`pip install flask flask_sqlalchemy flask_migrate python-dotenv`
+O projeto utiliza ESP32 + RFID para registrar entradas e saídas de usuários em tempo real através de uma aplicação web desenvolvida com Flask.
 
-## Migração
+---
 
-A migração de banco de dados é necessária para que o sistema possa crescer e se
-adaptar sem perder informações importantes. Ela ajuda a atualizar a estrutura
-dos dados, acompanhar novas funcionalidades e garantir que tudo continue
-funcionando bem, mesmo com mudanças na tecnologia ou na forma como o sistema é
-usado.
+## Tecnologias
 
-Para criar o banco de dados inicialmente:
+* Python
+* Flask
+* SQLAlchemy
+* PostgreSQL
+* HTML/CSS/JavaScript
+* ESP32
+* RFID RC522
 
-`flask db init`
+---
 
-Para registrar uma migração depois de fazer uma mudança:
+## Deploy
 
-`flask --app app db migrate` `flask --app app db upgrade`
+Aplicação hospedada no Render:
 
-## Pastas
+https://v-ia-eyn8.onrender.com/
 
-| Pasta            | Descrição                                                                      |
-| ---------------- | ------------------------------------------------------------------------------ |
-| controladores    | Contem os "controllers" do sistema, onde a logica (rotas) da aplicação ficarão |
-| instance         | Criada pelo banco de dados, não mexer, _não deve_ ser parte do git             |
-| migrations       | Criada pelo banco de dados, não mexer, _deve_ ser parte do git                 |
-| modelos          | Modelos do banco de dados, classes para cada tabela + a classe modelo base     |
-| vistas/templates | Onde os templates ficam                                                        |
+Banco de dados PostgreSQL hospedado no Neon.
 
-## Controladores
+---
 
-Controladores devem criar um objeto `Blueprint` do modulo `flask` e ao inves de
-criar rotas com `app.route` deve ser feito `blueprint.route`
+## Login de teste
 
-Depois no seu app.py deve importar essa blueprint e registra-la
+Email:
 
-## Modelos
+```txt
+via@gmail.com
+```
 
-Modelos usam flask_sqlalchemy
+Senha:
 
-São classes do python que definem colunas como membros da classe, foi criada uma
-classe base `Modelo` com `id` e `data_criacao`
+```txt
+via2026
+```
 
-Outras classes definidas devem herdar essa classe base `Modelo` e definir suas
-colunas com:
+---
 
-`nome_coluna = db.Column(db.TIPO, ...)`
+## Funcionalidades
 
-Os tipos mais comuns são:
+* Login de administradores
+* Cadastro de usuários
+* Cadastro de cartões RFID
+* Registro automático de acesso
+* Histórico de entradas e saídas
+* Controle de permissões
+* Painel administrativo
 
-| Tipo               | Descrição                                           |
-| ------------------ | --------------------------------------------------- |
-| db.Integer         | Numeros inteiros                                    |
-| db.Float           | Numeros reais                                       |
-| db.String(tamanho) | Textos de tamanho definido (maximo)                 |
-| db.Text            | Textos de tamanho não definido (sem tamanho maximo) |
-| db.Boolean         | Booleanos                                           |
-| db.DateTime        | Objetos do tipo `datetime` no python                |
+---
 
-Colunas tambem podem conter atributos como `unique=True`, `nullable=False`,
-`default=0`
+## Estrutura do sistema
 
-Esse projeto usa SQLAlchemy 1, existe uma verção mais nova SQLAlchemy 2, cuidado
-ao procurar documentação, veja da verção mais "antiga"
+```txt
+ESP32 + RFID
+      ↓
+Servidor Flask
+      ↓
+PostgreSQL
+      ↓
+Painel Web
+```
 
-## Vistas
+---
 
-Templates do flask
+## Como executar
 
-# .env
+Clone o projeto:
 
-O projeto carrega valores secretos de um arquivo `.env`, esse arquivo deve estar
-na pasta base do projeto (junto com o app.py) e deve conter a seguinte
-estrutura:
+```bash
+git clone https://github.com/seu-usuario/seu-repositorio.git
+```
+
+Instale as dependências:
+
+```bash
+pip install -r requirements.txt
+```
+
+Configure o arquivo `.env`:
 
 ```env
-SECRET_KEY="sua_chave_secreta"
-SQLALCHEMY_DATABASE_URI="sqlite:///via.sqlite3"
-# Ou para um banco de dados postgres
-SQLALCHEMY_DATABASE_URI="postgres://..."
+DATABASE_URL=
+SECRET_KEY=
 ```
+
+Execute o projeto:
+
+```bash
+flask run
+```
+
+---
+
+## Desenvolvedores
+
+* Rafael Borges Marchetti
+* Rafael Rodrigues de Mattos
+* João Victhor Kolling
+* Diemerson de Matos
+
+---
+
+## SENAI — Curitiba/PR
+
+Projeto desenvolvido para conclusão do curso Técnico em Desenvolvimento de Sistemas.
